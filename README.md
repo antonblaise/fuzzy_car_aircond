@@ -10,7 +10,20 @@ Most, if not all, of the car aircond control knobs are manual, and the auto mode
 
 ![FULL_labelled](https://user-images.githubusercontent.com/68864109/153745205-29ea11ba-e9cd-4c20-b12e-91cb386133fb.png)
 
-## Output
+## Results
 
+![serial_plot](https://user-images.githubusercontent.com/68864109/153745280-19923618-360c-4140-a55d-d5dab8a0d126.png)
+
+When cabin temperature rises, the temperature knob (%) goes lower, which is towards the cooler side, whereas the fan speed is increased. Vice versa.
+
+## Temperature knob and fan speed representations
+
+- Temperature knob
+
+Left being cooler, right being warmer.
 ![temperature_knob_labelled](https://user-images.githubusercontent.com/68864109/153745240-9cf8382b-d789-4a28-b859-fbbd2a0e29ed.png)
+
+- Fan speed
+
+Micro 360 degrees continuous spinning servo motor. The higher the _Fan speed %_, the faster it turns.
 ![fan_labelled jpg](https://user-images.githubusercontent.com/68864109/153745257-5fba57ad-4eda-44d4-b160-1754f7dbf69a.png)
