@@ -6,7 +6,7 @@ Most, if not all, of the car aircond control knobs are manual, and the auto mode
 
 ![aircond_knob](https://user-images.githubusercontent.com/68864109/153634692-7d8e99bd-7b94-41ef-9730-b21b6c94b72d.png)
 
-## Project layout
+## Project Layout
 
 ![FULL_labelled](https://user-images.githubusercontent.com/68864109/153745205-29ea11ba-e9cd-4c20-b12e-91cb386133fb.png)
 
@@ -16,7 +16,7 @@ Most, if not all, of the car aircond control knobs are manual, and the auto mode
 
 When cabin temperature rises, the temperature knob (%) goes lower, which is towards the cooler side, whereas the fan speed is increased. Vice versa.
 
-## Temperature knob and fan speed representations
+## Temperature Knob and Fan Speed Representations
 
 - Temperature knob
 
