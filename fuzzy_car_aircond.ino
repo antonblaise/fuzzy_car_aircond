@@ -24,6 +24,8 @@ void setup()
     // Pin mode for Input: Cabin_temperature
 //    pinMode(0 , INPUT);
     pinMode(tempPin , INPUT);
+
+//    LED indicators    
     pinMode(7, OUTPUT);
     pinMode(6, OUTPUT);
     pinMode(5, OUTPUT);
@@ -34,41 +36,35 @@ void setup()
 //    pinMode(1 , OUTPUT);
 //    // Pin mode for Output: Fan_speed
 //    pinMode(2 , OUTPUT);
+
+//    Servo motors (aircond control outputs)
     temp.attach(11);
     fan.attach(10);
+    
     Serial.begin(9600);
-
+    Serial.println("Cabin_temperature_(*C),Temperature_knob_(%),Fan_speed_(%)");
 }
 
 // Loop routine runs over and over again forever:
 void loop()
 {
-    float sum = 0.0, mv = 0.0, cel = 0.0, len = 500.0;
+    float sum = 0.0, mv = 0.0, cel = 0.0, period = 5000.0;
     
-    Serial.print("\n#################################################\n");  
-//    Denoise/Smoothing with moving average
-    for (int i = 0; i < len; i++)
+//    Denoise/Smoothing with simple moving average (SMA)
+    for (int i = 0; i < period; i++)
     {
       val = analogRead(tempPin);
       mv = ( val / 1024.0) * 5000;
       cel = mv / 10;
       sum += cel;
-//      Serial.print(i+1);
-//      Serial.print(". val = ");
-//      Serial.println(val);
     }
-    
-//    Serial.print("sum = ");
-//    Serial.println(sum);
-    cel = (sum/len) - 5;
-    Serial.print("Avg cel = ");
-    Serial.println(cel);
+    cel = (sum/period) - 3;
     
 
-////  Normal
+////  Normal (no smoothing)
 //    val = analogRead(tempPin);
 //    mv = ( val / 1024.0) * 5000;
-//    cel = (mv / 10) - 5;
+//    cel = (mv / 10) - 2;
 
 
     // Read Input: Cabin_temperature
@@ -81,6 +77,7 @@ void loop()
       cel = high;
     } else 
     {}
+    
     g_fisInput[0] = cel;
 
     g_fisOutput[0] = 0;
@@ -95,16 +92,12 @@ void loop()
 //    analogWrite(2 , g_fisOutput[1]);
     fan.write(90 - (90 * g_fisOutput[1] / 100));
 
-    Serial.print("\nCabin temperature = ");
+//    Show/Plot data
     Serial.print(cel);
-    Serial.println("*C");
-    Serial.print("Temperature knob = ");
+    Serial.print(",");
     Serial.print(g_fisOutput[0]);
-    Serial.println("%");
-    Serial.print("Fan speed = ");
-    Serial.print(g_fisOutput[1]);
-    Serial.println("%");
-    Serial.print("\n#################################################\n");
+    Serial.print(",");
+    Serial.println(g_fisOutput[1]); 
 
     if (g_fisOutput[1] > 75 && g_fisOutput[1] <= 100)
     {
@@ -196,9 +189,9 @@ int fis_gOMFCount[] = { 5, 5 };
 
 // Coefficients for the Input Member Functions
 FIS_TYPE fis_gMFI0Coeff1[] = { 3.185, 15 };
-FIS_TYPE fis_gMFI0Coeff2[] = { 3.185, 22.5 };
-FIS_TYPE fis_gMFI0Coeff3[] = { 3.185, 30 };
-FIS_TYPE fis_gMFI0Coeff4[] = { 3.185, 37.5 };
+FIS_TYPE fis_gMFI0Coeff2[] = { 3.19, 20.5149206349206 };
+FIS_TYPE fis_gMFI0Coeff3[] = { 3.19, 26.031746031746 };
+FIS_TYPE fis_gMFI0Coeff4[] = { 3.19, 34.831746031746 };
 FIS_TYPE fis_gMFI0Coeff5[] = { 3.185, 45 };
 FIS_TYPE* fis_gMFI0Coeff[] = { fis_gMFI0Coeff1, fis_gMFI0Coeff2, fis_gMFI0Coeff3, fis_gMFI0Coeff4, fis_gMFI0Coeff5 };
 FIS_TYPE** fis_gMFICoeff[] = { fis_gMFI0Coeff };
